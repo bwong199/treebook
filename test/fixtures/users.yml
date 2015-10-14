@@ -3,6 +3,5 @@ ben:
 	last_name: "Wong"
 	email: "bwong199@my.bcit.ca"
 	profile_name: "ben"
-	password: "password"
-	password_confirmation: "password"
+
 
