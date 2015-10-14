@@ -21,3 +21,7 @@ body {
 .alert{
 	margin-top: 10px;
 }
+
+em{
+	font-size: 60%; 
+}
