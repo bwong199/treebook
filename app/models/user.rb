@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
 
   # attr_accessible :email, :password, :password_confirmation, :remember_me, 
   # 					:first_name, :last_name, :profile_name
-  has_many :statuses
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :profile_name, 
@@ -14,8 +13,11 @@ class User < ActiveRecord::Base
   			uniqueness: true, 
   			format:{ 
   				with: /\A[a-zA-Z0-9_-]+\z/,
-  				message: "Must be formatted correctly."
+  				message: "must be formatted correctly."
   				}
+
+  has_many :statuses
+
   def full_name
   	first_name + " " + last_name
   end 
