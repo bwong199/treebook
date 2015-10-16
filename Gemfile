@@ -7,15 +7,26 @@ gem 'devise'
 # gem 'sqlite3'
 group :development, :test do
 	gem 'sqlite3'
+  gem 'log-buddy'
 end 
 
 group :production do 
 	gem "pg"
-end 
+end
+
+group :development do 
+  gem 'thin' 
+end  
 
 group :test do 
 	gem 'shoulda'
+	gem 'factory_girl_rails'
 end
+gem 'paperclip' 
+gem 'draper', '~> 1.0'
+gem "js-routes"
+gem 'aasm'
+# gem 'state_machine'
 # Use sqlite3 as the database for Active Record
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

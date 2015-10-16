@@ -3,7 +3,7 @@ ben:
     last_name: "Wong"
     email: "bwong199@my.bcit.ca"
     profile_name: "ben"
-
+    encrypted_password: $2a$10$Fh/Hm8RxDsuPTeBUr6864.GARlcmt7zF2WspaXGr3BIv2C27N.osq
 jim:
     first_name: "Jim"
     last_name: "Hoskins"
@@ -16,3 +16,8 @@ mike:
     email: "mike@teamtreehouse.com"
     profile_name: "mikeTheFrog"
 
+blocked_friend:
+    first_name: "Blocked"
+    last_name: 'Friend'
+    email: 'blocked@teamtreehouse.com'
+    profile_name: 'youblockedme'
