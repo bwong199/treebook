@@ -1,3 +1,0 @@
-gem "rails", "~> 4.0.0"
-gem "mongoid", github: "mongoid/mongoid"
-gem "devise", "~> 3.0.0"
