@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 gem 'devise'
-gem 'sqlite3'
+
 gem 'twitter-bootstrap-rails'
 gem "breadcrumbs_on_rails"
 gem 'will_paginate', '~> 3.0.6'
