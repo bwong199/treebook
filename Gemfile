@@ -8,7 +8,7 @@ gem 'rails_12factor'
 gem 'twitter-bootstrap-rails'
 gem "breadcrumbs_on_rails"
 gem 'will_paginate', '~> 3.0.6'
-
+gem 'puma'
 
 group :development, :test do
 	gem 'sqlite3'
