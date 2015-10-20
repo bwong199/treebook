@@ -1,0 +1,23 @@
+<div class="page-header">
+<h1>Activity Feed</h1>
+</div>  
+
+<% @activities.each do |activity| %>
+
+				<div class="status">
+					<div class="row">
+						<div class="span1">
+						<%= avatar_profile_link activity.user, {}, class: 'pull-left' %> 
+						</div>
+					<div class="span7"> 
+					  	<strong> <%= activity.user.full_name %></strong>  
+					  	<div class="meta">
+					    	<small><%= activity.created_at %></small>
+     					<%= render partial: "activities/#{activity.targetable_type.underscore}/#{activity.action}", 
+            			locals: { activity: activity } %>
+						</div>
+					</div> 
+				</div>
+		</div>
+
+<% end %> 

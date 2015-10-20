@@ -11,13 +11,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015162036) do
+ActiveRecord::Schema.define(version: 20151019045717) do
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "action"
+    t.integer  "targetable_id"
+    t.string   "targetable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "activities", ["targetable_id", "targetable_type"], name: "index_activities_on_targetable_id_and_targetable_type"
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id"
+
+  create_table "albums", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "albums", ["user_id"], name: "index_albums_on_user_id"
+
+  create_table "documents", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "documents", ["user_id"], name: "index_documents_on_user_id"
+
+  create_table "pictures", force: :cascade do |t|
+    t.integer  "album_id"
+    t.integer  "user_id"
+    t.string   "caption"
+    t.text     "description"
+    t.string   "pictures_file_name"
+    t.string   "pictures_content_type"
+    t.integer  "pictures_file_size"
+    t.datetime "pictures_updated_at"
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "pictures", ["album_id"], name: "index_pictures_on_album_id"
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
 
   create_table "statuses", force: :cascade do |t|
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "user_id"
+    t.integer  "document_id"
   end
 
   add_index "statuses", ["user_id"], name: "index_statuses_on_user_id"
@@ -49,6 +103,10 @@ ActiveRecord::Schema.define(version: 20151015162036) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

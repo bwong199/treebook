@@ -2,16 +2,88 @@
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
+// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
 //
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
+// the compiled file.
 //
-// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
-// about supported directives.
+// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+// GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require js-routes
 //= require_tree .
+
+window.loadedActivities = [];
+
+var addActivity = function(item) {
+  var found = false;
+  for (var i = 0; i < window.loadedActivities.length; i++) {
+    if (window.loadedActivities[i].id == item.id) {
+      var found = true;
+    }
+  }
+
+  if (!found) {
+    window.loadedActivities.push(item);
+  }
+
+  return item;
+}
+
+var renderActivities = function() {
+  var source = $('#activities-template').html();
+  var template = Handlebars.compile(source);
+  var html = template({activities: window.loadedActivities});
+  var $activityFeedLink = $('li#activity-feed');
+  
+    $activityFeedLink.addClass('dropdown');
+  $activityFeedLink.html(html);
+  $activityFeedLink.find('a.dropdown-toggle').dropdown();
+}
+
+var pollActivity = function() {
+  $.ajax({
+    url: Routes.activities_path({format: 'json', since: window.lastFetch}),
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      window.lastFetch = Math.floor((new Date).getTime() / 1000);
+      if (data.length > 0) {
+        for (var i = 0; i < data.length; i++) {
+          addActivity(data[i]);
+        }
+        renderActivities();
+      }
+    }
+  });
+}
+
+Handlebars.registerHelper('activityLink', function(){
+
+	var link, path, html;
+	var activity = this;
+	var linkText = this.targetable_type.toLowerCase();
+
+	switch(linkText){
+		case 'status':
+			path = Routes.status_path(activity.targetable_id);
+			break;
+		case 'album':
+			path = Routes.album_path(activity.profile_name, activity.targetable_id);
+			break;
+		case 'picture':
+			path = Routes.album_picture_path(activity.profile_name,activity.targetable.album);
+			break;
+		case 'userFriendship':
+			path = Routes.profile_path(activity.profile_name);
+			break;
+	}
+
+	html = "<li><a href='"+path + "'>" +this.user_name + ' ' +this.action+ ' '+ 'a ' + linkText + "</a></li>";
+	return new Handlebars.SafeString("<li><a>" + html + "</a></li>")
+})
+
+// window.pollInterval = window.setInterval( pollActivity, 5000 );
+pollActivity();

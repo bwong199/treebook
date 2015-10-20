@@ -4,10 +4,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 gem 'devise'
-# gem 'sqlite3'
+gem 'sqlite3'
+gem 'twitter-bootstrap-rails'
+gem "breadcrumbs_on_rails"
+gem 'will_paginate', '~> 3.0.6'
+
 group :development, :test do
 	gem 'sqlite3'
-  gem 'log-buddy'
+  gem 'log_buddy'
 end 
 
 group :production do 
@@ -26,6 +30,8 @@ gem 'paperclip'
 gem 'draper', '~> 1.0'
 gem "js-routes"
 gem 'aasm'
+
+gem 'rmagick'
 # gem 'state_machine'
 # Use sqlite3 as the database for Active Record
 # Use SCSS for stylesheets

@@ -1,26 +1,45 @@
 class StatusesController < ApplicationController
-  before_filter :authenticate_user!, only:[:new, :create, :edit, :destroy, :index]
-  before_action :set_status, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only:[:new, :create, :edit, :destroy, :index]
 
+
+  # rescue_from Active:Model::MassAssignmentSecurity::Error, with: :render_permission_error
 
   # GET /statuses
   # GET /statuses.json
   def index
-    @statuses = Status.all
+    @statuses = Status.order('created_at desc').all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @statuses }
+    end
   end
 
   # GET /statuses/1
   # GET /statuses/1.json
   def show
+      @status = Status.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @status }
+    end
   end
 
   # GET /statuses/new
   def new
-    @status = Status.new
+    @status = current_user.statuses.new
+    @status.build_document
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @status}
+    end 
   end
 
   # GET /statuses/1/edit
   def edit
+    @status = current_user.statuses.find(params[:id])
   end
 
   # POST /statuses
@@ -30,6 +49,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
+        current_user.create_activity(@status, 'created')
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
         format.json { render :show, status: :created, location: @status }
       else
@@ -43,23 +63,37 @@ class StatusesController < ApplicationController
   # PATCH/PUT /statuses/1.json
   def update
     @status = current_user.statuses.find(params[:id])
-    if params[:status] && params[:status].has_key?(:user_id)
-      params[:status].delete(:user_id) 
-    end 
-    respond_to do |format|
-      if @status.update(status_params)
-        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
-        format.json { render :show, status: :ok, location: @status }
-      else
-        format.html { render :edit }
-        format.json { render json: @status.errors, status: :unprocessable_entity }
+    @document = @status.document
+
+    @status.transaction do 
+
+      @status.update_attributes(status_params)
+      @document.update_attributes(params.require(:status).permit(:document)) if @document
+      current_user.create_activity(@status, 'updated')
+      unless @status.valid? || (@status.valid? && @document && !! @document.valid?)
+        raise ActiveRecord::Rollback unless @status.valid? && @document.try(:valid?)
       end
     end
+
+    respond_to do |format|
+        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
+        format.json { render :show, status: :ok, location: @status }
+    end 
+
+    rescue ActiveRecord::Rollback
+      respond_to do |format|
+        format.html do
+        flash.now[:now] = "Update failed."
+        render action: "edit"
+        end
+        format.json { render json: @status.errors, status: :unprocessable_entity }
+      end
   end
 
   # DELETE /statuses/1
   # DELETE /statuses/1.json
   def destroy
+    @status = current_user.statuses.find(params[:id])
     @status.destroy
     respond_to do |format|
       format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
@@ -75,6 +109,6 @@ class StatusesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def status_params
-      params.require(:status).permit(:content, :user_id)
+      params.require(:status).permit(:content, :user_id, :document, document_attributes:[:attachment, :remove_attachment])
     end
 end
