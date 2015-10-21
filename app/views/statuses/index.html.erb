@@ -40,6 +40,15 @@
 
 </div> 
 
+<% @statuses.each do |status| %>
+<% status.comments.each do |comment| %>
+	<%= comment.user %> 
+
+
+
+<% end %> 
+<% end %> 
+
 <div class="col-md-10">
 <% @statuses.each do |status| %>
 	<%  if can_display_status?(status) %>
@@ -58,7 +67,7 @@
 					 	<p><%= status.likes.count %> people liked this </p> 
 					  	<div class="meta">
 
-					 
+
 					    	<div id='form'>
 					    		<form action='/likes' method='post' >
 							    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>

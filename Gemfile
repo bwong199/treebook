@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 gem 'devise'
-gem 'rails_12factor'
+
 gem 'twitter-bootstrap-rails'
 gem "breadcrumbs_on_rails"
 gem 'will_paginate', '~> 3.0.6'
 gem 'puma'
-gem 'sqlite3'
+# gem 'sqlite3'
 
 group :development, :test do
 	gem 'sqlite3'
