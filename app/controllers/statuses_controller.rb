@@ -7,6 +7,13 @@ class StatusesController < ApplicationController
   # GET /statuses
   # GET /statuses.json
   def index
+    @status = current_user.statuses.new
+    @status.build_document
+
+    @comment = current_user.statuses.new
+    @comment.build_document
+
+
     @statuses = Status.order('created_at desc').all
 
     respond_to do |format|
@@ -49,7 +56,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
-        current_user.create_activity(@status, 'created')
+        current_user.create_activity(statuses_path, 'created')
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
         format.json { render :show, status: :created, location: @status }
       else

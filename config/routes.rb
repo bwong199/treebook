@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   resources :activities, only: [:index]
 
   resources :pictures
-
+  resources :comments 
+  resources :findfriends
+  resources :likes
   get 'profiles/show'
-
-
 
   as :user do 
     get '/register', to: 'devise/registrations#new', as: :register

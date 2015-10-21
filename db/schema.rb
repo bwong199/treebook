@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019045717) do
+ActiveRecord::Schema.define(version: 20151020220437) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 20151019045717) do
 
   add_index "albums", ["user_id"], name: "index_albums_on_user_id"
 
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "status_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["status_id"], name: "index_comments_on_status_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
   create_table "documents", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at",              null: false
@@ -45,6 +56,20 @@ ActiveRecord::Schema.define(version: 20151019045717) do
   end
 
   add_index "documents", ["user_id"], name: "index_documents_on_user_id"
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "status_id"
+    t.integer  "comment_id"
+    t.integer  "picture_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "likes", ["comment_id"], name: "index_likes_on_comment_id"
+  add_index "likes", ["picture_id"], name: "index_likes_on_picture_id"
+  add_index "likes", ["status_id"], name: "index_likes_on_status_id"
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
 
   create_table "pictures", force: :cascade do |t|
     t.integer  "album_id"

@@ -1,15 +1,49 @@
+
+
 <div class="page-header">
-<h1>All of the Statuses </h1> 
+
+<div class="span10">
+<%= simple_form_for(@status, html: {class: "form-vertical", multipart: true}) do |f| %>
+  <% if @status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
+	      <ul>
+	      <% @status.errors.full_messages.each do |message| %>
+	        <li><%= message %></li>
+	      <% end %>
+	      </ul>
+    </div>
+  <% end %>
+
+
+  <%= f.input :content, placeholder: "What's on your mind?" , input_html: {rows: 3, class: 'input-xxlarge'} %> 
+  <%= f.fields_for :document do |document_fields| %>
+    <% if document_fields.object.attachment? %>
+    <div class="control-group"> 
+      <label class="control-label">Current attachment</label>
+      <div class="controls">
+        <%= link_to document_fields.object.attachment_file_name, document_fields.object.attachment.url %>
+      </div>
+    </div>
+    <%= document_fields.input :remove_attachment, as: :boolean, label: "Remove attachment?" %> 
+    <% end %>  
+  <%= document_fields.input :attachment, as: :file %> 
+  <% end %> 
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Post', class: 'btn btn-primary' %>
+  </div>
+
+<% end %> 
+</div>
+</div>
+
 </div> 
 
-
-
-
-
-<%= link_to "Post a New Status", new_status_path, class: "btn btn-success" %> 
-
+<div class="col-md-10">
 <% @statuses.each do |status| %>
-	<%  if can_display_status?(status) %> 
+	<%  if can_display_status?(status) %>
+
 				<div class="status">
 					<div class="row">
 						<div class="span1">
@@ -17,19 +51,77 @@
 						</div>
 					<div class="span7"> 
 					  	<strong> <%= status.user.full_name %></strong> 
-					 	<p><%= status.content %></p>
-					 	<%= status_document_link(status) %>  
+					  	<br>
+					  	<p><%= link_to time_ago_in_words(status.created_at) + " ago ", status %><p>
+					 	<%= status.content %>
+					 	<p><%= status_document_link(status) %></p>
+					 	<p><%= status.likes.count %> people liked this </p> 
 					  	<div class="meta">
-					    	<%= link_to time_ago_in_words(status.created_at) + " ago ", status %> |
+
+					 
+					    	<div id='form'>
+					    		<form action='/likes' method='post' >
+							    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+							    <input type="hidden" name="status_id" value='<%= status.id %>'>
+							    <input type='hidden' name='user_id' value='<%= current_user.id %>'>
+							    <button type='submit' class="glyphicon glyphicon-thumbs-up" >
+							  	</form>
+							</div>
+
+							
 					    	<% if signed_in? && current_user == status.user %>
 						    <span class="admin">
 						      	<%= link_to "Edit", edit_status_path(status) %>  |
 						     	<%= link_to "Delete", status, method: :delete, data:{ confirm: "Are you sure you want to delete this status? "} %> 
 						    </span>
-						    <% end %>  
+						    <% end %> 
+							
+						    	<form action="/comments" method="post">
+							    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+							    <input type="hidden" name="status_id" value='<%= status.id %>'>
+							    <input type="hidden" name="user_id" value='<%= current_user.id %> '>
+							    <label for="comment">Comment</label>
+							    <input type="text"  name="comment[content]">
+							    <button type="submit" class='glyphicon glyphicon-comment'>
+							    </form>
+
+
+
 						</div>
+
+						    <% status.comments.each do |comment| %>
+						    	<div class="status">
+									<div class="row">
+										<div class="span1">
+									<%= avatar_profile_link status.user, {}, class: 'pull-left' %>
+										</div>
+										<div class="span2">
+								    	<strong><%= comment.user %></strong> <%= comment.content %>
+								    	<br>
+								    	<%= time_ago_in_words(comment.created_at)+ " ago" %> 
+								    	<br>
+							
+						    	<div id='form'>
+							    	<form action='/likes' method='post' >
+								    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+								    <input type="hidden" name="comment_id" value='<%= comment.id %>'>
+								    <input type='hidden' name='user_id' value='<%= current_user.id %>'>
+								    <%= comment.likes.count %>
+								    <button type='submit' class="glyphicon glyphicon-thumbs-up" >
+
+								  	</form>
+								</div>
+								  	
+							
+								  	</div>
+							    	<br>
+							    	<br>
+									</div>
+								</div>
+						    <% end %> 
 					</div> 
 				</div>
-		</div>
+			</div>
 	<% end %> 
-<% end %> 
+<% end %>
+</div> 

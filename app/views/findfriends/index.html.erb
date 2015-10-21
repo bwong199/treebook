@@ -1,0 +1,15 @@
+<div class="page-header">
+<h1>Find Friends</h1> 
+    
+</div> 
+
+
+
+<% @users.each do |user| %>
+
+<h3><%= image_tag(user.avatar.url) %><h3>
+<br>
+<br>
+
+
+<% end %> 

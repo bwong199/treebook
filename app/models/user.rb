@@ -24,6 +24,8 @@ validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image
   has_many :albums
   has_many :pictures
   has_many :statuses
+  has_many :comments, through:  :statuses
+  has_many :likes, through: :statuses
   has_many :user_friendships, dependent: :destroy
   has_many :friends, -> { where(user_friendships: { state: 'accepted' }).order('name DESC') }, :through => :user_friendships
   # has_many :friends, through: :user_friendships,conditions: {user_friendships: {state: 'accepted'}}
@@ -81,6 +83,10 @@ validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image
 
   def has_blocked?(other_user)
     blocked_friends.include?(other_user)
+  end
+
+  def accepted_friends?(other_user)
+    accepted_friends.include?(other_user)
   end
 
   def create_activity(item, action)
