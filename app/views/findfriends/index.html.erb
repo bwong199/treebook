@@ -4,12 +4,21 @@
 </div> 
 
 
-
+<div class="col-md-10">
 <% @users.each do |user| %>
-
-<h3><%= image_tag(user.avatar.url) %><h3>
-<br>
-<br>
-
-
+				<div class="status">
+					<div class="row">
+						<div class="span1">
+						<%= avatar_profile_link user, {}, class: 'pull-left' %> 
+						</div>
+						<div class="span7"> 
+						  	<strong> <%= user.full_name %></strong> 
+						  	<br>
+						</div>
+					  	<div class="meta">
+					  		<%= user.user_friendships.first.friend_id %> 
+						</div>
+					</div>
+				</div>
 <% end %> 
+</div> 

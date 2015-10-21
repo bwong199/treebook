@@ -59,7 +59,7 @@ class UserFriendship < ActiveRecord::Base
 	end
 
 	def mutual_friendship
- 		mutual_friendship = self.class.where({user_id: friend_id, friend_id: user_id}).first
+ 		self.class.where({user_id: friend_id, friend_id: user_id}).first
 	end 
 
 	def accept_mutual_friendship!

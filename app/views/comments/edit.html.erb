@@ -1,0 +1,26 @@
+<%= simple_form_for(@comment, html: {class: "form-vertical", multipart: true}) do |f| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this status from being saved:</h2>
+      <ul>
+      <% @comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <%= f.input :content, input_html: {rows: 4, class: 'input-xxlarge'} %> 
+  <%= f.fields_for :document do |document_fields| %>
+
+  <%= document_fields.input :attachment, as: :file %> 
+  <% end %> 
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to "Back", statuses_path, class: 'btn' %>
+  </div>
+
+<% end %> 

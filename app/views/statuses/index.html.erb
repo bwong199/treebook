@@ -67,7 +67,7 @@
 					 	<p><%= status.likes.count %> people liked this </p> 
 					  	<div class="meta">
 
-
+					  	<% if @likes.where(status_id: status.id).first.nil? %> 
 					    	<div id='form'>
 					    		<form action='/likes' method='post' >
 							    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
@@ -76,7 +76,7 @@
 							    <button type='submit' class="glyphicon glyphicon-thumbs-up" >
 							  	</form>
 							</div>
-
+						<% end %> 
 							
 					    	<% if signed_in? && current_user == status.user %>
 						    <span class="admin">
@@ -105,21 +105,34 @@
 									<%= avatar_profile_link status.user, {}, class: 'pull-left' %>
 										</div>
 										<div class="span2">
-								    	<strong><%= comment.user %></strong> <%= comment.content %>
+								    	<strong><%= comment.user %></strong> <%= comment.content %> <%= comment.id %> 
 								    	<br>
 								    	<%= time_ago_in_words(comment.created_at)+ " ago" %> 
 								    	<br>
-							
+
+							<% if signed_in? && current_user == comment.user %>
+						    <div class="admin">
+						<%= link_to "Edit", edit_comment_path(comment) %>  |
+
+						<%= link_to 'Delete', comment_path(comment.id),
+            			:confirm => 'Are you sure you want to destroy this comment?', :method => :delete %>
+		
+						    </div>
+						    <% end %> 
+							<% if @likes.where(comment_id: comment.id).first.nil? %> 
 						    	<div id='form'>
 							    	<form action='/likes' method='post' >
 								    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
 								    <input type="hidden" name="comment_id" value='<%= comment.id %>'>
 								    <input type='hidden' name='user_id' value='<%= current_user.id %>'>
-								    <%= comment.likes.count %>
+								    
 								    <button type='submit' class="glyphicon glyphicon-thumbs-up" >
 
 								  	</form>
 								</div>
+
+							<% end %> 
+							<%= comment.likes.count %> likes
 								  	
 							
 								  	</div>

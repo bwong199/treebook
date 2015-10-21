@@ -13,6 +13,7 @@ class StatusesController < ApplicationController
     @comment = current_user.statuses.new
     @comment.build_document
 
+    @likes = Like.all
 
     @statuses = Status.order('created_at desc').all
 
