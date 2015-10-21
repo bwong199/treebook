@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 gem 'devise'
-gem 'rails_12factor'
+
 gem 'twitter-bootstrap-rails'
 gem "breadcrumbs_on_rails"
 gem 'will_paginate', '~> 3.0.6'
-gem 'puma'
+
 # gem 'sqlite3'
 
 group :development, :test do
@@ -80,4 +80,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
+gem 'rails_12factor', group: :production
+ruby "2.0.0"
+gem 'puma'
