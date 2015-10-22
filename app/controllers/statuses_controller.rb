@@ -15,6 +15,8 @@ class StatusesController < ApplicationController
 
     @likes = Like.all
 
+    @comments = Comment.all
+
     @statuses = Status.order('created_at desc').all
 
     respond_to do |format|

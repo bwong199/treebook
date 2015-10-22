@@ -1,8 +1,8 @@
 class Status < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :document
-	has_many :comments
-	has_many :likes
+	has_many :comments, dependent: :destroy
+	has_many :likes, dependent: :destroy
 
 	accepts_nested_attributes_for :document
 

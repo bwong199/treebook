@@ -34,21 +34,16 @@
     <%= f.button :submit, 'Post', class: 'btn btn-primary' %>
   </div>
 
-<% end %> 
+
 </div>
 </div>
 
 </div> 
 
-<% @statuses.each do |status| %>
-<% status.comments.each do |comment| %>
-	<%= comment.user %> 
-
 
 
 <% end %> 
-<% end %> 
-
+<hr>
 <div class="col-md-10">
 <% @statuses.each do |status| %>
 	<%  if can_display_status?(status) %>
@@ -89,7 +84,6 @@
 							    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
 							    <input type="hidden" name="status_id" value='<%= status.id %>'>
 							    <input type="hidden" name="user_id" value='<%= current_user.id %> '>
-							    <label for="comment">Comment</label>
 							    <input type="text"  name="comment[content]">
 							    <button type="submit" class='glyphicon glyphicon-comment'>
 							    </form>
@@ -102,10 +96,10 @@
 						    	<div class="status">
 									<div class="row">
 										<div class="span1">
-									<%= avatar_profile_link status.user, {}, class: 'pull-left' %>
+									<%= avatar_profile_link comment.user, {}, class: 'pull-left' %>
 										</div>
 										<div class="span2">
-								    	<strong><%= comment.user %></strong> <%= comment.content %> <%= comment.id %> 
+								    	<strong><%= comment.user.full_name %></strong> <%= comment.content %> 
 								    	<br>
 								    	<%= time_ago_in_words(comment.created_at)+ " ago" %> 
 								    	<br>
