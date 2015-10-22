@@ -8,7 +8,7 @@ gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem "breadcrumbs_on_rails"
 gem 'will_paginate', '~> 3.0.6'
-gem 'sqlite3'
+
 
 
 group :development, :test do
