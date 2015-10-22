@@ -3,7 +3,7 @@
 
 <div class="page-header">
 	<h1><%= @user.full_name %></h1> 
-
+	<%= avatar_profile_link @user, {} %> 
 </div>
 
 <%= link_to "Albums", albums_path(@user), class: 'btn' %>

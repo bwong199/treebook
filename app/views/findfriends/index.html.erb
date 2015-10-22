@@ -3,6 +3,13 @@
     
 </div> 
 
+<%= current_user.user_friendships.map(&:friend_id).uniq %> 
+
+<% current_user.user_friendships.each do |x| %> 
+
+	<%= x.friend_id %> 
+
+<% end %> 
 
 <div class="col-md-10">
 <% @users.each do |user| %>
@@ -16,8 +23,20 @@
 						  	<br>
 						</div>
 					  	<div class="meta">
-					  		<%= user.user_friendships.first.friend_id %> 
+					  			<%= user.id %> 
+<span id="friend-status">
+<% if signed_in? %> 
+<span id="friend-status">
+	<% unless current_user.friends.include?(user) || current_user.pending_friends.include?(user) %>  
+
+		<%= link_to "Add Friend", new_user_friendship_path(friend_id: user.id), id: 'add-friendship', data: { friend_id: user.to_param }, class: 'btn btn-primary', :remote => true %>
+	<% end %> 
+</span> 
+<% end %> 
+
+
 						</div>
+
 					</div>
 				</div>
 <% end %> 

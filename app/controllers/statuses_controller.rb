@@ -59,7 +59,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
-        current_user.create_activity(statuses_path, 'created')
+        current_user.create_activity(@status, 'created')
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
         format.json { render :show, status: :created, location: @status }
       else

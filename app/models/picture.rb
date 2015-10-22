@@ -3,8 +3,9 @@ class Picture < ActiveRecord::Base
   belongs_to :user
 
   has_attached_file :asset, 
-  styles: {large: "800x800>", medium: "300x200>", small: "260x180>", thumb:"80x80#"}
-validates_attachment :asset, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+  styles: {large: "800x800>", medium: "300x200>", small: "260x180>", thumb:"100x100#"}
+validates_attachment :asset, 
+content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
 	
 	def to_s

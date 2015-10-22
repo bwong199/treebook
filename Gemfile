@@ -9,7 +9,7 @@ gem 'twitter-bootstrap-rails'
 gem "breadcrumbs_on_rails"
 gem 'will_paginate', '~> 3.0.6'
 
-gem 'sqlite3'
+
 
 group :development, :test do
 	gem 'sqlite3'
@@ -28,7 +28,7 @@ group :test do
 	gem 'shoulda'
 	gem 'factory_girl_rails'
 end
-gem 'paperclip' 
+gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'draper', '~> 1.0'
 gem "js-routes"
 gem 'aasm'
