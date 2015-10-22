@@ -50,6 +50,8 @@ validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image
            
   has_many :accepted_friends, through: :accepted_user_friendships, source: :friend
 
+
+
   has_attached_file :avatar
 
   def self.get_gravatars
@@ -88,6 +90,8 @@ validates_attachment :avatar, content_type: { content_type: ["image/jpg", "image
   def accepted_friends?(other_user)
     accepted_friends.include?(other_user)
   end
+
+  
 
   def create_activity(item, action)
     activity = activities.new

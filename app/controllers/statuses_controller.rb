@@ -19,6 +19,8 @@ class StatusesController < ApplicationController
 
     @statuses = Status.order('created_at desc').all
 
+
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statuses }

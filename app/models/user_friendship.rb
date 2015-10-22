@@ -14,7 +14,6 @@ class UserFriendship < ActiveRecord::Base
 	# 		transition any => :accepted
 	# 	end
 	# end 
-
   	aasm :column => 'state', :whiny_transitions => false do
 	    state :pending, :initial => true
 	    state :requested

@@ -3,13 +3,7 @@
     
 </div> 
 
-<%= current_user.user_friendships.map(&:friend_id).uniq %> 
 
-<% current_user.user_friendships.each do |x| %> 
-
-	<%= x.friend_id %> 
-
-<% end %> 
 
 <div class="col-md-10">
 <% @users.each do |user| %>
@@ -23,7 +17,7 @@
 						  	<br>
 						</div>
 					  	<div class="meta">
-					  			<%= user.id %> 
+					  			
 <span id="friend-status">
 <% if signed_in? %> 
 <span id="friend-status">

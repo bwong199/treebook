@@ -46,7 +46,7 @@
 <hr>
 <div class="col-md-10">
 <% @statuses.each do |status| %>
-	<%  if can_display_status?(status) %>
+	<%  if can_display_status?(status) || status.user_id == current_user.id%>
 
 				<div class="status">
 					<div class="row">

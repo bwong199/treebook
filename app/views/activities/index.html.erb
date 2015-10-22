@@ -2,8 +2,10 @@
 <h1>Activity Feed</h1>
 </div>  
 
-<% @activities.each do |activity| %>
 
+
+<% @activities.each do |activity| %>
+<%  if can_display_status?(activity) || activity.user_id == current_user.id%>
 				<div class="status">
 					<div class="row">
 						<div class="span1">
@@ -19,5 +21,5 @@
 					</div> 
 				</div>
 		</div>
-
+<% end %> 
 <% end %> 
