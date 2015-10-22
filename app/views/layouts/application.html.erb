@@ -11,10 +11,11 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div id="header">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a href="#" class="brand">PhaceBook<em> By Ben Phu Wong</em></a>
+				<a href="#" class="brand">PhaceBook<em> By Ben Wong</em></a>
 				<ul class='nav'>
 					<li id='activity-feed'><%= link_to "Statuses", feed_path %> </li>
 					<% if user_signed_in? %> 
@@ -33,10 +34,11 @@
 					<li><%= link_to "Login", login_path %> </li>
 					<% end %> 
 				</ul>
-
 			</div>
 		</div>
 	</div>
+</div>
+</div>
 	<div class="container">
 		<%= render_breadcrumbs %>
 		<% flash.each do |type, message| %>

@@ -3,13 +3,13 @@
 </div>  
 
 
-
+<div class="col-md-4">
 <% @activities.each do |activity| %>
 <%  if can_display_status?(activity) || activity.user_id == current_user.id%>
 				<div class="status">
 					<div class="row">
 						<div class="span1">
-						<%= avatar_profile_link activity.user, {}, class: 'pull-left' %> 
+						<%= avatar_profile_link activity.user, {}, class: 'pull-left', style: "width:70px;height:70px;" %> 
 						</div>
 					<div class="span7"> 
 					  	<strong> <%= activity.user.full_name %></strong>  
@@ -23,3 +23,4 @@
 		</div>
 <% end %> 
 <% end %> 
+</div>
