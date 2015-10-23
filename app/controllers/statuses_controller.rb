@@ -8,10 +8,10 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   def index
     @status = current_user.statuses.new
-    @status.build_document
+    # @status.build_document
 
     @comment = current_user.statuses.new
-    @comment.build_document
+    # @comment.build_document
 
     @likes = Like.all
 
