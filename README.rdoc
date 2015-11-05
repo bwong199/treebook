@@ -1,28 +1,13 @@
-== README
+A facebook clone built using the tutorial on Teamtreehouse.com - https://teamtreehouse.com/library/build-a-simple-ruby-on-rails-application. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The tutorial used Rails 3 and some outdated gems, but I built it using Rails 4 and current gems. 
 
-Things you may want to cover:
+Key features include: 
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+	- Registration & authentication
+	- Find friends
+	- Send/accept/decline friend requests
+	- Create status feeds
+	- Status feeds only show feeds from self and requested friends
+	- Upload pictures to album
+	- Activities feed
